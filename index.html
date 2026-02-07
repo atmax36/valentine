@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Valentine?</title>
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Segoe UI', sans-serif;
+        background: #ffe6eb;
+        transition: background 0.8s ease;
+    }
+
+    .container {
+        text-align: center;
+        z-index: 10;
+    }
+
+    h1 {
+        font-size: 2.8rem;
+        color: #b30047;
+        margin-bottom: 30px;
+    }
+
+    button {
+        padding: 14px 30px;
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        position: absolute;
+        transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    #yes {
+        background: #ff3366;
+        color: white;
+        position: static;
+        margin-right: 20px;
+    }
+
+    #no {
+        background: #555;
+        color: white;
+    }
+
+    /* Floating Elements */
+    .float {
+        position: absolute;
+        bottom: -50px;
+        animation: floatUp linear forwards;
+        pointer-events: none;
+    }
+
+    .bubble {
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.4);
+        box-shadow: 0 0 10px rgba(255,255,255,0.6);
+    }
+
+    .panda {
+        font-size: 2.2rem;
+    }
+
+    @keyframes floatUp {
+        from {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateY(-110vh);
+            opacity: 0;
+        }
+    }
+
+    .success {
+        font-size: 3rem;
+        color: white;
+        font-weight: bold;
+        animation: pop 0.6s ease;
+    }
+
+    @keyframes pop {
+        0% { transform: scale(0.6); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container" id="content">
+    <h1>Will you be my Valentine? 💖</h1>
+    <button id="yes">Yes</button>
+    <button id="no">No</button>
+</div>
+
+<script>
+    const noBtn = document.getElementById("no");
+    const yesBtn = document.getElementById("yes");
+    const content = document.getElementById("content");
+
+    let attempts = 0;
+    const maxAttempts = 4;
+    let animationRunning = true;
+
+    // Escaping NO button
+    noBtn.addEventListener("mouseover", () => {
+        attempts++;
+
+        if (attempts >= maxAttempts) {
+            noBtn.innerText = "Yes";
+            noBtn.style.background = "#ff3366";
+            noBtn.style.position = "static";
+            noBtn.onclick = success;
+            return;
+        }
+
+        const x = Math.random() * (window.innerWidth - 150);
+        const y = Math.random() * (window.innerHeight - 80);
+
+        noBtn.style.left = `${x}px`;
+        noBtn.style.top = `${y}px`;
+    });
+
+    yesBtn.addEventListener("click", success);
+
+    function success() {
+        animationRunning = false;
+        document.body.style.background = "#2ecc71";
+        content.innerHTML = `<div class="success">Right choice! 💚</div>`;
+    }
+
+    // Floating bubbles & pandas
+    function createFloat() {
+        if (!animationRunning) return;
+
+        const el = document.createElement("div");
+        el.classList.add("float");
+
+        const isPanda = Math.random() < 0.35;
+
+        if (isPanda) {
+            el.classList.add("panda");
+            el.innerText = "🐼";
+        } else {
+            el.classList.add("bubble");
+            const size = Math.random() * 40 + 15;
+            el.style.width = `${size}px`;
+            el.style.height = `${size}px`;
+        }
+
+        el.style.left = Math.random() * 100 + "vw";
+        el.style.animationDuration = Math.random() * 6 + 6 + "s";
+
+        document.body.appendChild(el);
+
+        setTimeout(() => el.remove(), 12000);
+    }
+
+    setInterval(createFloat, 400);
+</script>
+
+</body>
+</html>
