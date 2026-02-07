@@ -2,98 +2,159 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>BUB</title>
+<title>BUBUUUU</title>
 
 <style>
-    body {
-        margin: 0;
-        height: 100vh;
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-family: 'Segoe UI', sans-serif;
-        background: #ffe6eb;
-        transition: background 0.8s ease;
-    }
+/* ---------- BASE ---------- */
+body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', sans-serif;
+    background: #ffe6eb;
+    transition: background 0.8s ease;
+}
 
-    .container {
-        text-align: center;
-        z-index: 10;
-    }
+.container {
+    text-align: center;
+    z-index: 10;
+}
 
-    h1 {
-        font-size: 2.8rem;
-        color: #b30047;
-        margin-bottom: 30px;
-    }
+h1 {
+    font-size: 2.8rem;
+    color: #b30047;
+    margin-bottom: 40px;
+}
 
-    button {
-        padding: 14px 30px;
-        font-size: 1.2rem;
-        border: none;
-        border-radius: 30px;
-        cursor: pointer;
-        position: absolute;
-        transition: transform 0.3s ease, background 0.3s ease;
-    }
+/* ---------- BUTTONS ---------- */
+button {
+    padding: 18px 38px;
+    font-size: 1.4rem;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    transition:
+        transform 0.15s cubic-bezier(.34,1.56,.64,1),
+        box-shadow 0.15s ease,
+        background 0.3s ease;
+}
 
-    #yes {
-        background: #ff3366;
-        color: white;
-        position: static;
-        margin-right: 20px;
-    }
+#yes {
+    position: static;
+    background: linear-gradient(145deg, #ff4f7b, #ff1f5c);
+    color: white;
+    box-shadow: 0 10px 0 #c41644, 0 18px 30px rgba(0,0,0,0.25);
+    animation: yesPulse 2.2s infinite;
+}
 
-    #no {
-        background: #555;
-        color: white;
-    }
+#no {
+    background: linear-gradient(145deg, #666, #333);
+    color: white;
+    box-shadow: 0 10px 0 #111, 0 18px 30px rgba(0,0,0,0.35);
+}
 
-    /* Floating Elements */
-    .float {
-        position: absolute;
-        bottom: -50px;
-        animation: floatUp linear forwards;
-        pointer-events: none;
-    }
+button:hover { transform: translateY(-4px) scale(1.05); }
+button:active {
+    transform: translateY(6px) scale(0.95);
+    box-shadow: 0 4px 0 rgba(0,0,0,0.4);
+}
 
-    .bubble {
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.4);
-        box-shadow: 0 0 10px rgba(255,255,255,0.6);
-    }
+@keyframes yesPulse {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+}
 
-    .panda {
-        font-size: 2.2rem;
-    }
+/* ---------- SHAKE ---------- */
+@keyframes buttonShake {
+    0% { transform: translateX(0) scale(1.05); }
+    25% { transform: translateX(-6px) scale(1.05); }
+    50% { transform: translateX(6px) scale(1.05); }
+    75% { transform: translateX(-6px) scale(1.05); }
+    100% { transform: translateX(0) scale(1.05); }
+}
+.shake { animation: buttonShake 0.35s; }
 
-    @keyframes floatUp {
-        from {
-            transform: translateY(0);
-            opacity: 1;
-        }
-        to {
-            transform: translateY(-110vh);
-            opacity: 0;
-        }
-    }
+/* ---------- PANDA ---------- */
+#panda {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    font-size: 4rem;
+    z-index: 20;
+    transition: transform 0.4s cubic-bezier(.34,1.56,.64,1);
+}
 
-    .success {
-        font-size: 3rem;
-        color: white;
-        font-weight: bold;
-        animation: pop 0.6s ease;
-    }
+.panda-worried { transform: scale(1.1) rotate(-5deg); }
+.panda-panic { animation: pandaShake 0.4s infinite; }
+.panda-happy { animation: pandaBounce 0.8s infinite; }
 
-    @keyframes pop {
-        0% { transform: scale(0.6); opacity: 0; }
-        100% { transform: scale(1); opacity: 1; }
-    }
+@keyframes pandaShake {
+    0%{transform:translateX(0)}
+    25%{transform:translateX(-6px)}
+    50%{transform:translateX(6px)}
+    75%{transform:translateX(-6px)}
+    100%{transform:translateX(0)}
+}
+@keyframes pandaBounce {
+    0%{transform:translateY(0) scale(1.3)}
+    50%{transform:translateY(-12px) scale(1.35)}
+    100%{transform:translateY(0) scale(1.3)}
+}
+
+/* ---------- SPEECH ---------- */
+#speech {
+    position: fixed;
+    bottom: 120px;
+    right: 100px;
+    background: white;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-weight: 600;
+    display: none;
+}
+
+/* ---------- FLOATING ---------- */
+.float {
+    position: absolute;
+    bottom: -50px;
+    animation: floatUp linear forwards;
+    pointer-events: none;
+}
+.bubble {
+    border-radius: 50%;
+    background: rgba(255,255,255,0.4);
+}
+.pandaFloat { font-size: 2rem; }
+
+@keyframes floatUp {
+    to { transform: translateY(-110vh); opacity: 0; }
+}
+
+/* ---------- SUCCESS ---------- */
+.success {
+    font-size: 3.4rem;
+    color: white;
+    font-weight: 900;
+    animation: successBounce 0.8s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes successBounce {
+    0%{transform:scale(0.3);opacity:0}
+    70%{transform:scale(1.1)}
+    100%{transform:scale(1)}
+}
 </style>
 </head>
 
 <body>
+
+<div id="panda">🐼</div>
+<div id="speech"></div>
 
 <div class="container" id="content">
     <h1>Will you be my Valentine? 💖</h1>
@@ -101,77 +162,89 @@
     <button id="no">No</button>
 </div>
 
-<script>
-    const noBtn = document.getElementById("no");
-    const yesBtn = document.getElementById("yes");
-    const content = document.getElementById("content");
-
-    let attempts = 0;
-    const maxAttempts = 4;
-    let animationRunning = true;
-
-    // Escaping NO button
-    noBtn.addEventListener("mouseover", () => {
-        attempts++;
-
-        if (attempts >= maxAttempts) {
-            noBtn.innerText = "Yes";
-            noBtn.style.background = "#ff3366";
-            noBtn.style.position = "static";
-            noBtn.onclick = success;
-            return;
-        }
-
-        const x = Math.random() * (window.innerWidth - 150);
-        const y = Math.random() * (window.innerHeight - 80);
-
-        noBtn.style.left = `${x}px`;
-        noBtn.style.top = `${y}px`;
-    });
-
-    yesBtn.addEventListener("click", success);
-
-    function success() {
-        animationRunning = false;
-        document.body.style.background = "#2ecc71";
-        content.innerHTML = `<div class="success">Right choice! 💚</div>`;
-    }
-
-    // Floating bubbles & pandas
-    function createFloat() {
-        if (!animationRunning) return;
-
-        const el = document.createElement("div");
-        el.classList.add("float");
-
-        const isPanda = Math.random() < 0.35;
-
-        if (isPanda) {
-            el.classList.add("panda");
-            el.innerText = "🐼";
-        } else {
-            el.classList.add("bubble");
-            const size = Math.random() * 40 + 15;
-            el.style.width = `${size}px`;
-            el.style.height = `${size}px`;
-        }
-
-        el.style.left = Math.random() * 100 + "vw";
-        el.style.animationDuration = Math.random() * 6 + 6 + "s";
-
-        document.body.appendChild(el);
-
-        setTimeout(() => el.remove(), 12000);
-    }
-
-    setInterval(createFloat, 400);
-    <audio id="bgMusic" loop preload="auto">
+<audio id="bgMusic" loop preload="auto">
     <source src="love-music.mp3" type="audio/mpeg">
 </audio>
 
+<script>
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+const panda = document.getElementById("panda");
+const speech = document.getElementById("speech");
+const content = document.getElementById("content");
+const music = document.getElementById("bgMusic");
+
+let attempts = 0, running = true;
+
+/* FLOATING */
+setInterval(()=>{
+    if(!running) return;
+    const el = document.createElement("div");
+    el.className = "float";
+    if(Math.random()<0.35){
+        el.textContent="🐼";
+        el.classList.add("pandaFloat");
+    } else {
+        el.classList.add("bubble");
+        const s=Math.random()*30+15;
+        el.style.width=el.style.height=s+"px";
+    }
+    el.style.left=Math.random()*100+"vw";
+    el.style.animationDuration=(Math.random()*6+6)+"s";
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),12000);
+},400);
+
+/* PANDA TALK */
+function say(text){
+    speech.textContent=text;
+    speech.style.display="block";
+    setTimeout(()=>speech.style.display="none",1500);
+}
+
+/* NO INTERACTION */
+noBtn.addEventListener("mouseenter",()=>{
+    noBtn.classList.add("shake");
+    panda.className="panda-worried";
+    say("Careful 😟");
+    setTimeout(()=>noBtn.classList.remove("shake"),350);
+});
+
+noBtn.addEventListener("mouseover",()=>{
+    attempts++;
+    panda.className="panda-panic";
+    say("Nooo! 😱");
+
+    if(attempts>=4){
+        noBtn.textContent="Yes";
+        noBtn.style.position="static";
+        panda.className="panda-happy";
+        say("Good choice! 💖");
+        return;
+    }
+
+    const x=Math.random()*(window.innerWidth-180);
+    const y=Math.random()*(window.innerHeight-100);
+    noBtn.style.left=x+"px";
+    noBtn.style.top=y+"px";
+});
+
+/* SUCCESS */
+function success(e){
+    running=false;
+    document.body.style.background="#2ecc71";
+    content.innerHTML=`<div class="success">Right choice! 💚</div>`;
+    panda.className="panda-happy";
+    say("Yaaay! 🐼💖");
+    if(e && e.isTrusted){
+        music.volume=0.6;
+        music.play().catch(()=>{});
+    }
+}
+
+yesBtn.addEventListener("click",success);
+noBtn.addEventListener("click",success);
 </script>
 
 </body>
 </html>
-
-
